@@ -17,8 +17,8 @@
             <input type="text" name="genre" class="form-control" id="genre" placeholder="Enter the genre">
         </div>
         <div class="form-group">
-            <label for="grade">Grade</label>
-            <input type="text" name="grade" class="form-control" id="grade" placeholder="Enter the grade">
+            <label for="rating">Rating</label>
+            <input type="text" name="rating" class="form-control" id="rating" placeholder="Enter the rating">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

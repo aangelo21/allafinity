@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('category');
             $table->string('genre');
-            $table->string('grade');
+            $table->string('rating');
             $table->timestamps();
         });
     }

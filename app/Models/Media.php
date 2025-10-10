@@ -13,6 +13,6 @@ class Media extends Model
         'title',
         'category',
         'genre',
-        'grade',
+        'rating',
     ];
 }

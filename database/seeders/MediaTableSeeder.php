@@ -18,11 +18,11 @@ class MediaTableSeeder extends Seeder
             ['title' => 'Kingdom', 
             'category' => 'TV Show', 
             'genre' => 'Epic action', 
-            'grade' => '9'],
+            'rating' => '9'],
             ['title' => 'Breaking Bad', 
             'category' => 'TV Show', 
             'genre' => 'Drama', 
-            'grade' => '10'],
+            'rating' => '10'],
         ]);
     }
 }
