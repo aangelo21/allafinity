@@ -22,5 +22,5 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <a href="{{ route('media.index')}}">Back to the list</a>
+    <a href="{{ route('media.index') }}">Back to the list</a>
 @endsection
