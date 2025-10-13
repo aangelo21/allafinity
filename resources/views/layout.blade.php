@@ -8,7 +8,7 @@
     <h1>allafinity</h1>
 
     <div class="container">
-        @yield('name')
+        @yield('content')
     </div>
 </body>
 
