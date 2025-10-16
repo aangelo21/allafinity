@@ -22,9 +22,28 @@ class MediaController extends Controller
         $media->title = $request->input('title');
         $media->category = $request->input('category');
         $media->genre = $request->input('genre');
-    $media->rating = $request->input('rating');
+        $media->rating = $request->input('rating');
         $media->save();
 
+        return redirect()->route('media.index');
+    }
+
+    public function edit(Media $medium) {
+        return view('media.edit', ['media' => $medium]);
+    }
+
+    public function update(Request $request, Media $medium) {
+        $medium->title = $request->input('title');
+        $medium->category = $request->input('category');
+        $medium->genre = $request->input('genre');
+        $medium->rating = $request->input('rating');
+        $medium->save();
+
+        return redirect()->route('media.index');
+    }
+
+    public function destroy(Media $medium) {
+        $medium->delete();
         return redirect()->route('media.index');
     }
 }
