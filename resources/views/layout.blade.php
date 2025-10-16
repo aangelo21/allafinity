@@ -1,31 +1,32 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Allafinity</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/layout.css">
+    @yield('styles')
 </head>
 
-<body class="flex flex-col min-h-screen bg-gray-50">
+<body>
     <!-- Header -->
-    <header class="bg-white shadow-md">
-        <nav class="container mx-auto px-4 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-gray-800">Allafinity</a>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <div class="logo-container">
+                    <a href="/" class="logo">Allafinity</a>
                 </div>
                 
                 <!-- Navigation Menu -->
-                <div class="hidden md:flex space-x-8">
-                    <a href="/" class="text-gray-600 hover:text-gray-900">Inicio</a>
-                    <a href="{{ route('media.index') }}" class="text-gray-600 hover:text-gray-900">Lista</a>
-                    <a href="{{ route('media.create') }}" class="text-gray-600 hover:text-gray-900">Añadir</a>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="{{ route('media.index') }}" class="nav-link">List</a>
+                    <a href="{{ route('media.create') }}" class="nav-link">Add</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-900 focus:outline-none">
+                <div class="mobile-menu-button">
+                    <button id="mobile-menu-button">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
@@ -34,47 +35,47 @@
             </div>
 
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden mt-4">
-                <div class="flex flex-col space-y-4">
-                    <a href="/" class="text-gray-600 hover:text-gray-900">Inicio</a>
-                    <a href="{{ route('media.index') }}" class="text-gray-600 hover:text-gray-900">Lista</a>
-                    <a href="{{ route('media.create') }}" class="text-gray-600 hover:text-gray-900">Añadir</a>
+            <div id="mobile-menu" class="mobile-menu">
+                <div class="mobile-menu-links">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="{{ route('media.index') }}" class="nav-link">List</a>
+                    <a href="{{ route('media.create') }}" class="nav-link">Add</a>
                 </div>
             </div>
         </nav>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow container mx-auto px-4 py-8">
+    <main>
         @yield('content')
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white">
-        <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Allafinity</h3>
-                    <p class="text-gray-300">Tu plataforma de medios digitales</p>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Allafinity</h3>
+                    <p>Your digital media platform</p>
                 </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Enlaces rápidos</h3>
-                    <ul class="space-y-2">
-                        <li><a href="/" class="text-gray-300 hover:text-white">Inicio</a></li>
-                        <li><a href="{{ route('media.index') }}" class="text-gray-300 hover:text-white">Lista</a></li>
-                        <li><a href="{{ route('media.create') }}" class="text-gray-300 hover:text-white">Añadir</a></li>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="/" class="footer-link">Home</a></li>
+                        <li><a href="{{ route('media.index') }}" class="footer-link">List</a></li>
+                        <li><a href="{{ route('media.create') }}" class="footer-link">Add</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="text-xl font-semibold mb-4">Contacto</h3>
-                    <ul class="space-y-2 text-gray-300">
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
                         <li>Email: info@allafinity.com</li>
-                        <li>Teléfono: +34 123 456 789</li>
+                        <li>Phone: +34 123 456 789</li>
                     </ul>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-gray-700 text-center text-gray-300">
-                <p>&copy; {{ date('Y') }} Allafinity. Todos los derechos reservados.</p>
+            <div class="footer-bottom">
+                <p>&copy; {{ date('Y') }} Allafinity. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -82,7 +83,30 @@
     <!-- Mobile Menu JavaScript -->
     <script>
         document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
+            document.getElementById('mobile-menu').classList.toggle('active');
+            
+            // Cambiar el ícono del botón
+            const buttonSvg = this.querySelector('svg');
+            if (document.getElementById('mobile-menu').classList.contains('active')) {
+                buttonSvg.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                `;
+            } else {
+                buttonSvg.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                `;
+            }
+        });
+
+        // Cerrar el menú al hacer clic en un enlace
+        document.querySelectorAll('.mobile-menu .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.remove('active');
+                const buttonSvg = document.querySelector('#mobile-menu-button svg');
+                buttonSvg.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                `;
+            });
         });
     </script>
 </body>

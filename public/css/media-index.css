@@ -1,0 +1,211 @@
+/* Media index page styles */
+.page-container {
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+}
+
+.page-title {
+    font-size: 1.875rem;
+    font-weight: bold;
+    color: #1F2937;
+    margin: 0;
+}
+
+.add-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #9333EA;
+    color: white;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+}
+
+.add-button:hover {
+    background-color: #7E22CE;
+}
+
+.add-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #F9FAFB, 0 0 0 4px #9333EA;
+}
+
+.add-button svg {
+    height: 1.25rem;
+    width: 1.25rem;
+    margin-right: 0.5rem;
+}
+
+/* Empty state */
+.empty-state {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.empty-state p {
+    color: #4B5563;
+    font-size: 1.125rem;
+}
+
+.empty-state a {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #9333EA;
+}
+
+.empty-state a:hover {
+    color: #7E22CE;
+}
+
+/* Media grid */
+.media-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .media-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .media-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.media-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+}
+
+.media-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+.media-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1F2937;
+    margin-bottom: 0.5rem;
+}
+
+.media-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: #4B5563;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+}
+
+.info-item svg {
+    height: 1.25rem;
+    width: 1.25rem;
+    color: #9CA3AF;
+    margin-right: 0.5rem;
+}
+
+/* Rating stars */
+.rating-container {
+    display: flex;
+    align-items: center;
+}
+
+.stars-container {
+    display: flex;
+    align-items: center;
+}
+
+.star {
+    height: 1.25rem;
+    width: 1.25rem;
+}
+
+.star.filled {
+    color: #FBBF24;
+}
+
+.star.empty {
+    color: #D1D5DB;
+}
+
+.rating-text {
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+    color: #4B5563;
+}
+
+/* Action buttons */
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #E5E7EB;
+}
+
+.edit-button,
+.delete-button {
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s;
+}
+
+.edit-button {
+    background-color: #2563EB;
+    color: white;
+}
+
+.edit-button:hover {
+    background-color: #1D4ED8;
+}
+
+.edit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #F9FAFB, 0 0 0 4px #2563EB;
+}
+
+.delete-button {
+    background-color: #DC2626;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #B91C1C;
+}
+
+.delete-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #F9FAFB, 0 0 0 4px #DC2626;
+}
+
+.action-button-icon {
+    height: 1rem;
+    width: 1rem;
+}
