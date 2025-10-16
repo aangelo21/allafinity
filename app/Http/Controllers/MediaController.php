@@ -22,7 +22,7 @@ class MediaController extends Controller
         $media->title = $request->input('title');
         $media->category = $request->input('category');
         $media->genre = $request->input('genre');
-        $media->rating = $request->input('rating');
+    $media->rating = $request->input('rating');
         $media->save();
 
         return redirect()->route('media.index');
