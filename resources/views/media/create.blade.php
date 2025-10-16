@@ -1,113 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>a l l a f i n i t y</title>
-    <style>
-        body {
-            background-color: rgb(30, 30, 30);
-            color: white;
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        }
-
-        #container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
-
-        hr {
-            width: 100%;
-        }
-
-        .form-container {
-            width: 90%;
-            max-width: 600px;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        input {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #666;
-            border-radius: 0.5rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1rem;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: darkorchid;
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        button {
-            border: 0;
-            background-color: darkorchid;
-            color: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 1rem;
-            cursor: pointer;
-            transition-duration: 0.4s;
-            margin: 0.5rem;
-        }
-
-        button:hover {
-            background-color: black;
-            transition-duration: 0.4s;
-        }
-
-        #button-container {
-            margin-top: 1rem;
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-    <div id="container">
-        <h1>Rate a Piece of Media</h1>
-        <hr>
-        <div class="form-container">
-            <form method="POST" action="{{ route('media.store') }}">
+@section('content')
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Califica un Medio</h1>
+            
+            <form method="POST" action="{{ route('media.store') }}" class="space-y-6">
                 @csrf
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" name="title" id="title" placeholder="Enter the title" required>
+                
+                <div class="space-y-2">
+                    <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+                    <input type="text" 
+                           name="title" 
+                           id="title" 
+                           placeholder="Ingresa el título" 
+                           required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
                 </div>
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <input type="text" name="category" id="category" placeholder="Enter the category" required>
+
+                <div class="space-y-2">
+                    <label for="category" class="block text-sm font-medium text-gray-700">Categoría</label>
+                    <input type="text" 
+                           name="category" 
+                           id="category" 
+                           placeholder="Ingresa la categoría" 
+                           required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
                 </div>
-                <div class="form-group">
-                    <label for="genre">Genre</label>
-                    <input type="text" name="genre" id="genre" placeholder="Enter the genre" required>
+
+                <div class="space-y-2">
+                    <label for="genre" class="block text-sm font-medium text-gray-700">Género</label>
+                    <input type="text" 
+                           name="genre" 
+                           id="genre" 
+                           placeholder="Ingresa el género" 
+                           required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
                 </div>
-                <div class="form-group">
-                    <label for="rating">Rating (1-10)</label>
-                    <input type="number" name="rating" id="rating" placeholder="Enter your rating" min="1" max="10" required>
+
+                <div class="space-y-2">
+                    <label for="rating" class="block text-sm font-medium text-gray-700">Calificación (1-10)</label>
+                    <input type="number" 
+                           name="rating" 
+                           id="rating" 
+                           placeholder="Ingresa tu calificación" 
+                           min="1" 
+                           max="10" 
+                           required
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
                 </div>
-                <div id="button-container">
-                    <button type="submit">Submit Rating</button>
-                    <button type="button" onclick="window.location.href='{{ route('media.index') }}'">Back to List</button>
+
+                <div class="flex justify-center space-x-4 pt-4">
+                    <button type="submit" 
+                            class="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-colors duration-200">
+                        Guardar Calificación
+                    </button>
+                    <a href="{{ route('media.index') }}" 
+                       class="px-6 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors duration-200">
+                        Volver a la Lista
+                    </a>
                 </div>
             </form>
         </div>
     </div>
-</body>
-
-</html>
+@endsection
