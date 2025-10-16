@@ -20,7 +20,7 @@ class MediaController extends Controller
     public function store(Request $request){
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'category' => 'required|in:Serie de TV,Película,Libro,Cómic',
+            'category' => 'required|in:TV Series,Movie,Book,Comic',
             'genre' => 'required|string|max:255',
             'rating' => 'required|integer|min:1|max:10'
         ]);
@@ -42,7 +42,7 @@ class MediaController extends Controller
     public function update(Request $request, Media $medium) {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'category' => 'required|in:Serie de TV,Película,Libro,Cómic',
+            'category' => 'required|in:TV Series,Movie,Book,Comic',
             'genre' => 'required|string|max:255',
             'rating' => 'required|integer|min:1|max:10'
         ]);
