@@ -18,13 +18,46 @@ class MediaController extends Controller
     }
 
     public function store(Request $request){
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'category' => 'required|in:Serie de TV,Película,Libro,Cómic',
+            'genre' => 'required|string|max:255',
+            'rating' => 'required|integer|min:1|max:10'
+        ]);
+
         $media = new Media;
-        $media->title = $request->input('title');
-        $media->category = $request->input('category');
-        $media->genre = $request->input('genre');
-    $media->rating = $request->input('rating');
+        $media->title = $validated['title'];
+        $media->category = $validated['category'];
+        $media->genre = $validated['genre'];
+        $media->rating = $validated['rating'];
         $media->save();
 
+        return redirect()->route('media.index');
+    }
+
+    public function edit(Media $medium) {
+        return view('media.edit', ['media' => $medium]);
+    }
+
+    public function update(Request $request, Media $medium) {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'category' => 'required|in:Serie de TV,Película,Libro,Cómic',
+            'genre' => 'required|string|max:255',
+            'rating' => 'required|integer|min:1|max:10'
+        ]);
+
+        $medium->title = $validated['title'];
+        $medium->category = $validated['category'];
+        $medium->genre = $validated['genre'];
+        $medium->rating = $validated['rating'];
+        $medium->save();
+
+        return redirect()->route('media.index');
+    }
+
+    public function destroy(Media $medium) {
+        $medium->delete();
         return redirect()->route('media.index');
     }
 }
