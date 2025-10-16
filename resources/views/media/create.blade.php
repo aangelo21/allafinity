@@ -20,12 +20,16 @@
 
                 <div class="space-y-2">
                     <label for="category" class="block text-sm font-medium text-gray-700">Categoría</label>
-                    <input type="text" 
-                           name="category" 
-                           id="category" 
-                           placeholder="Ingresa la categoría" 
-                           required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
+                    <select name="category" 
+                            id="category" 
+                            required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
+                        <option value="">Selecciona una categoría</option>
+                        <option value="Serie de TV">Serie de TV</option>
+                        <option value="Película">Película</option>
+                        <option value="Libro">Libro</option>
+                        <option value="Cómic">Cómic</option>
+                    </select>
                 </div>
 
                 <div class="space-y-2">

@@ -21,12 +21,16 @@
 
                 <div class="space-y-2">
                     <label for="category" class="block text-sm font-medium text-gray-700">Categoría</label>
-                    <input type="text" 
-                           name="category" 
-                           id="category" 
-                           value="{{ $media->category }}"
-                           required
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
+                    <select name="category" 
+                            id="category" 
+                            required
+                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
+                        <option value="">Selecciona una categoría</option>
+                        <option value="Serie de TV" {{ $media->category === 'Serie de TV' ? 'selected' : '' }}>Serie de TV</option>
+                        <option value="Película" {{ $media->category === 'Película' ? 'selected' : '' }}>Película</option>
+                        <option value="Libro" {{ $media->category === 'Libro' ? 'selected' : '' }}>Libro</option>
+                        <option value="Cómic" {{ $media->category === 'Cómic' ? 'selected' : '' }}>Cómic</option>
+                    </select>
                 </div>
 
                 <div class="space-y-2">
