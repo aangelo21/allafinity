@@ -18,21 +18,44 @@ class MediaController extends Controller
     }
 
     public function store(Request $request){
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'category' => 'required|in:TV Series,Movie,Book,Comic',
-            'genre' => 'required|string|max:255',
-            'rating' => 'required|integer|min:1|max:10'
-        ]);
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'category' => 'required|in:TV Series,Movie,Book,Comic',
+                'genre' => 'required|string|max:255',
+                'rating' => 'required|integer|min:1|max:10'
+            ]);
 
-        $media = new Media;
-        $media->title = $validated['title'];
-        $media->category = $validated['category'];
-        $media->genre = $validated['genre'];
-        $media->rating = $validated['rating'];
-        $media->save();
+            $media = new Media;
+            $media->title = $validated['title'];
+            $media->category = $validated['category'];
+            $media->genre = $validated['genre'];
+            $media->rating = $validated['rating'];
+            $media->save();
 
-        return redirect()->route('media.index');
+            if ($request->ajax()) {
+                return response()->json(['success' => true]);
+            }
+
+            return redirect()->route('media.index');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Please check the form for errors',
+                    'errors' => $e->errors()
+                ], 422);
+            }
+            throw $e;
+        } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'An error occurred while saving'
+                ], 500);
+            }
+            throw $e;
+        }
     }
 
     public function edit(Media $medium) {
@@ -57,7 +80,22 @@ class MediaController extends Controller
     }
 
     public function destroy(Media $medium) {
-        $medium->delete();
-        return redirect()->route('media.index');
+        try {
+            $medium->delete();
+            
+            if (request()->ajax()) {
+                return response()->json(['success' => true]);
+            }
+            
+            return redirect()->route('media.index');
+        } catch (\Exception $e) {
+            if (request()->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error deleting the item'
+                ], 500);
+            }
+            throw $e;
+        }
     }
 }

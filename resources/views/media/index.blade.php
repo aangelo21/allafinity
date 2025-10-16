@@ -5,6 +5,55 @@
 @endsection
 
 @section('content')
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Confirm Delete</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this item?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button modal-button-secondary" onclick="closeModal('deleteModal')">Cancel</button>
+                <button class="modal-button modal-button-primary" id="confirmDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Success</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>The item has been successfully deleted!</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button modal-button-primary" onclick="closeModal('successModal')">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Error</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="errorMessage">An error occurred while deleting the item.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-button modal-button-primary" onclick="closeModal('errorModal')">OK</button>
+            </div>
+        </div>
+    </div>
+
     <div class="page-container">
         <div class="header-container">
             <h1 class="page-title">Your Notes</h1>
@@ -65,17 +114,13 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                         </svg>
                                     </a>
-                                    <form action="{{ route('media.destroy', ['medium' => $item->id]) }}" method="POST" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" 
-                                                class="delete-button"
-                                                onclick="return confirm('¿Estás seguro de que quieres eliminar este medio?')">
-                                            <svg class="action-button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                            </svg>
-                                        </button>
-                                    </form>
+                                    <button type="button" 
+                                            class="delete-button"
+                                            onclick="showDeleteConfirmation('{{ route('media.destroy', ['medium' => $item->id]) }}', this)">
+                                        <svg class="action-button-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -84,4 +129,105 @@
             </div>
         @endif
     </div>
+
+    <script>
+        let currentDeleteUrl = '';
+        let currentDeleteButton = null;
+
+        function showDeleteConfirmation(deleteUrl, buttonElement) {
+            currentDeleteUrl = deleteUrl;
+            currentDeleteButton = buttonElement;
+            showModal('deleteModal');
+
+            // Setup confirm delete button
+            document.getElementById('confirmDelete').onclick = function() {
+                deleteItem();
+            };
+        }
+
+        function deleteItem() {
+            // Create a form with CSRF token
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.style.display = 'none';
+
+            // Add CSRF token
+            const csrfToken = document.createElement('input');
+            csrfToken.type = 'hidden';
+            csrfToken.name = '_token';
+            csrfToken.value = '{{ csrf_token() }}';
+            form.appendChild(csrfToken);
+
+            // Add method override
+            const methodInput = document.createElement('input');
+            methodInput.type = 'hidden';
+            methodInput.name = '_method';
+            methodInput.value = 'DELETE';
+            form.appendChild(methodInput);
+
+            // Send request
+            fetch(currentDeleteUrl, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                closeModal('deleteModal');
+                if (data.success) {
+                    // Remove the media card from the DOM
+                    const mediaCard = currentDeleteButton.closest('.media-card');
+                    mediaCard.style.opacity = '0';
+                    setTimeout(() => {
+                        mediaCard.remove();
+                        // Check if there are no more media cards
+                        if (document.querySelectorAll('.media-card').length === 0) {
+                            location.reload(); // Reload to show empty state
+                        }
+                    }, 300);
+                    showModal('successModal');
+                } else {
+                    throw new Error(data.message || 'Error deleting item');
+                }
+            })
+            .catch(error => {
+                closeModal('deleteModal');
+                document.getElementById('errorMessage').textContent = error.message || 'An error occurred while deleting';
+                showModal('errorModal');
+            });
+        }
+
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'block';
+
+            // Add click events for closing
+            const closeBtn = modal.querySelector('.modal-close');
+            closeBtn.onclick = () => closeModal(modalId);
+            
+            window.onclick = (event) => {
+                if (event.target === modal) {
+                    closeModal(modalId);
+                }
+            };
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
 @endsection
