@@ -3,7 +3,7 @@
 @section('content')
     <div class="max-w-2xl mx-auto">
         <div class="bg-white rounded-lg shadow-lg p-8">
-            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Califica un Medio</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Pon una nota</h1>
             
             <form method="POST" action="{{ route('media.store') }}" class="space-y-6">
                 @csrf
